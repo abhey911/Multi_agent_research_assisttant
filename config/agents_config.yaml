@@ -1,0 +1,139 @@
+agents:
+  researcher:
+    role: "Research Specialist"
+    goal: "Gather comprehensive and credible information on {topic}"
+    backstory: |
+      You are an expert researcher with a keen eye for credible sources.
+      You excel at finding relevant information quickly and thoroughly.
+      You have years of experience in academic and industry research,
+      and you know how to distinguish reliable sources from unreliable ones.
+      Your research is always comprehensive, well-organized, and properly cited.
+    verbose: true
+    allow_delegation: false
+    max_iterations: 10
+    
+  analyzer:
+    role: "Data Analyst"
+    goal: "Extract insights and identify patterns from research findings on {topic}"
+    backstory: |
+      You are a skilled analyst who can identify trends, patterns,
+      and key insights from large amounts of information.
+      You have expertise in critical thinking and can cross-reference
+      multiple sources to verify information and draw meaningful conclusions.
+      Your analysis is always thorough, objective, and insightful.
+    verbose: true
+    allow_delegation: false
+    max_iterations: 5
+    
+  writer:
+    role: "Technical Writer"
+    goal: "Create clear, comprehensive, and well-structured research reports on {topic}"
+    backstory: |
+      You are an experienced technical writer who can explain
+      complex topics in accessible language. You have a talent for
+      organizing information logically and presenting it in a way
+      that is both informative and engaging. Your reports are always
+      well-formatted, properly cited, and easy to understand.
+    verbose: true
+    allow_delegation: false
+    max_iterations: 3
+    
+  critic:
+    role: "Quality Assurance Specialist"
+    goal: "Ensure research reports on {topic} are accurate, complete, and high-quality"
+    backstory: |
+      You are a meticulous reviewer with high standards for
+      accuracy, clarity, and completeness. You have years of experience
+      in quality assurance and editorial review. You can quickly identify
+      gaps in logic, factual errors, and areas that need improvement.
+      Your feedback is always constructive and helps improve the final output.
+    verbose: true
+    allow_delegation: false
+    max_iterations: 2
+
+tasks:
+  research:
+    description: |
+      Conduct comprehensive research on the topic: {topic}
+      
+      Your research should include:
+      1. Multiple credible sources (academic papers, news articles, expert blogs)
+      2. Key facts, statistics, and data points
+      3. Recent developments and current state
+      4. Different perspectives and viewpoints
+      5. Relevant examples and case studies
+      
+      Ensure all sources are credible and up-to-date.
+      Compile your findings in a structured format with proper citations.
+    expected_output: |
+      A detailed research document containing:
+      - List of credible sources (at least 10-15)
+      - Key facts and statistics with citations
+      - Summary of different perspectives
+      - Timeline of recent developments
+      - Relevant examples and case studies
+      
+  analyze:
+    description: |
+      Analyze the research findings on {topic} and extract key insights.
+      
+      Your analysis should:
+      1. Cross-reference information from multiple sources
+      2. Identify patterns, trends, and consensus viewpoints
+      3. Highlight contradictions or controversies
+      4. Extract the most important insights
+      5. Evaluate the quality and credibility of sources
+      6. Identify knowledge gaps or areas needing more research
+      
+      Be objective and thorough in your analysis.
+    expected_output: |
+      A structured analysis document containing:
+      - Key insights and takeaways (5-10 main points)
+      - Identified patterns and trends
+      - Consensus vs. controversial viewpoints
+      - Source credibility assessment
+      - Knowledge gaps identified
+      
+  write:
+    description: |
+      Create a comprehensive research report on {topic} using the analysis provided.
+      
+      Your report should:
+      1. Have a clear structure (Introduction, Main Sections, Conclusion)
+      2. Include an executive summary
+      3. Explain concepts in accessible language
+      4. Properly cite all sources
+      5. Be 2000-3000 words in length
+      6. Use markdown formatting for clarity
+      7. Include relevant sections based on the topic
+      
+      Make the report informative, engaging, and professional.
+    expected_output: |
+      A well-formatted research report in markdown format containing:
+      - Title and executive summary
+      - Introduction section
+      - Multiple main content sections (3-5 sections)
+      - Conclusion section
+      - References section with all citations
+      - Proper markdown formatting (headers, lists, emphasis)
+      
+  review:
+    description: |
+      Review the research report on {topic} and provide quality assessment.
+      
+      Evaluate the report on:
+      1. Accuracy: Are all facts correct and properly cited?
+      2. Completeness: Are all important aspects covered?
+      3. Clarity: Is the writing clear and easy to understand?
+      4. Structure: Is the report well-organized and logical?
+      5. Quality: Does it meet professional standards?
+      
+      If improvements are needed, provide specific, constructive feedback.
+      If the report is excellent, approve it with a quality score.
+    expected_output: |
+      A review assessment containing:
+      - Quality score (0-10)
+      - Strengths of the report
+      - Areas needing improvement (if any)
+      - Specific suggestions for enhancement
+      - Final approval or revision request

@@ -1,0 +1,28 @@
+# Core Dependencies
+crewai
+crewai-tools
+langchain
+langchain-google-genai
+
+# Search and Web Tools
+google-search-results
+duckduckgo-search
+beautifulsoup4
+requests
+lxml
+
+# Data Processing
+pandas
+numpy
+
+# UI Framework
+streamlit
+streamlit-agraph
+
+# Configuration and Environment
+python-dotenv
+pyyaml
+
+# Utilities
+markdown
+Pillow
