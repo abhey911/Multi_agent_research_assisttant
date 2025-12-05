@@ -18,7 +18,8 @@ def create_researcher_agent(config, llm=None):
     if llm is None:
         llm = ChatGoogleGenerativeAI(
             model="gemini-1.5-flash",
-            temperature=0.7
+            temperature=0.7,
+            convert_system_message_to_human=True
         )
     
     # Get agent configuration
@@ -37,7 +38,8 @@ def create_researcher_agent(config, llm=None):
         llm=llm,
         verbose=agent_config.get('verbose', True),
         allow_delegation=agent_config.get('allow_delegation', False),
-        max_iter=agent_config.get('max_iterations', 10)
+        max_iter=agent_config.get('max_iterations', 10),
+        memory=True
     )
     
     return agent

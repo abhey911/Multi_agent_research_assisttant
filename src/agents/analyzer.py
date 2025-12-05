@@ -18,7 +18,8 @@ def create_analyzer_agent(config, llm=None):
     if llm is None:
         llm = ChatGoogleGenerativeAI(
             model="gemini-1.5-flash",
-            temperature=0.5
+            temperature=0.5,
+            convert_system_message_to_human=True
         )
     
     # Get agent configuration
@@ -36,7 +37,8 @@ def create_analyzer_agent(config, llm=None):
         llm=llm,
         verbose=agent_config.get('verbose', True),
         allow_delegation=agent_config.get('allow_delegation', False),
-        max_iter=agent_config.get('max_iterations', 5)
+        max_iter=agent_config.get('max_iterations', 5),
+        memory=True
     )
     
     return agent

@@ -3,6 +3,7 @@ crewai
 crewai-tools
 langchain
 langchain-google-genai
+litellm
 
 # Search and Web Tools
 google-search-results

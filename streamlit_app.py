@@ -8,6 +8,7 @@ import os
 from datetime import datetime
 from crewai import Crew, Process
 from pathlib import Path
+from langchain_google_genai import ChatGoogleGenerativeAI
 
 # Add src to path
 import sys
@@ -103,13 +104,28 @@ def run_research(topic, research_depth):
         # Create status placeholder
         status_placeholder = st.empty()
         
-        # Create agents
+        # Create LLM instances
+        status_placeholder.info("🔧 Initializing AI models...")
+        
+        llm_flash = ChatGoogleGenerativeAI(
+            model="gemini-1.5-flash",
+            temperature=0.7,
+            convert_system_message_to_human=True
+        )
+        
+        llm_pro = ChatGoogleGenerativeAI(
+            model="gemini-1.5-pro",
+            temperature=0.7,
+            convert_system_message_to_human=True
+        )
+        
+        # Create agents with LLM instances
         status_placeholder.info("🔧 Creating specialized agents...")
         
-        researcher = create_researcher_agent(agent_config)
-        analyzer = create_analyzer_agent(agent_config)
-        writer = create_writer_agent(agent_config)
-        critic = create_critic_agent(agent_config)
+        researcher = create_researcher_agent(agent_config, llm_flash)
+        analyzer = create_analyzer_agent(agent_config, llm_flash)
+        writer = create_writer_agent(agent_config, llm_pro)
+        critic = create_critic_agent(agent_config, llm_pro)
         
         agents = {
             'researcher': researcher,
@@ -143,6 +159,8 @@ def run_research(topic, research_depth):
         
     except Exception as e:
         st.error(f"Error during research: {str(e)}")
+        import traceback
+        st.error(traceback.format_exc())
         return None
 
 def main():
