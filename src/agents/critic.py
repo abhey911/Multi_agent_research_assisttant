@@ -16,7 +16,7 @@ def create_critic_agent(config, llm=None):
     """
     if llm is None:
         llm = ChatGoogleGenerativeAI(
-            model="gemini-1.5-pro",
+            model="gemini/gemini-1.5-pro",
             temperature=0.3,
             convert_system_message_to_human=True
         )

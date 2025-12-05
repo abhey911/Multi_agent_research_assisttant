@@ -17,7 +17,7 @@ def create_researcher_agent(config, llm=None):
     """
     if llm is None:
         llm = ChatGoogleGenerativeAI(
-            model="gemini-1.5-flash",
+            model="gemini/gemini-1.5-flash",
             temperature=0.7,
             convert_system_message_to_human=True
         )
