@@ -3,6 +3,8 @@ crewai
 crewai-tools
 langchain
 langchain-google-genai
+langchain-community
+langchain-huggingface
 litellm
 
 # Search and Web Tools

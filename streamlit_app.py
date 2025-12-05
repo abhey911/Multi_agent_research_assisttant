@@ -9,6 +9,7 @@ from datetime import datetime
 from crewai import Crew, Process
 from pathlib import Path
 from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_community.llms import HuggingFaceHub
 
 # Add src to path
 import sys
@@ -104,20 +105,33 @@ def run_research(topic, research_depth):
         # Create status placeholder
         status_placeholder = st.empty()
         
-        # Create LLM instances
+        # Create LLM instances based on configuration
         status_placeholder.info("🔧 Initializing AI models...")
         
-        llm_flash = ChatGoogleGenerativeAI(
-            model="gemini/gemini-1.5-flash",
-            temperature=0.7,
-            convert_system_message_to_human=True
-        )
+        use_hf = config.use_huggingface
         
-        llm_pro = ChatGoogleGenerativeAI(
-            model="gemini/gemini-1.5-pro",
-            temperature=0.7,
-            convert_system_message_to_human=True
-        )
+        if use_hf:
+            # Use Hugging Face
+            from langchain_community.llms import HuggingFaceHub
+            llm_flash = HuggingFaceHub(
+                repo_id=config.hf_model,
+                huggingfacehub_api_token=config.huggingface_api_key,
+                model_kwargs={"temperature": 0.7, "max_length": 512}
+            )
+            llm_pro = llm_flash  # Use same model for both
+        else:
+            # Use Google Gemini (default)
+            llm_flash = ChatGoogleGenerativeAI(
+                model="gemini/gemini-1.5-flash",
+                temperature=0.7,
+                convert_system_message_to_human=True
+            )
+            
+            llm_pro = ChatGoogleGenerativeAI(
+                model="gemini/gemini-1.5-pro",
+                temperature=0.7,
+                convert_system_message_to_human=True
+            )
         
         # Create agents with LLM instances
         status_placeholder.info("🔧 Creating specialized agents...")
