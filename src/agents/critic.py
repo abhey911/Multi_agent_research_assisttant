@@ -3,6 +3,11 @@
 from crewai import Agent
 from langchain_google_genai import ChatGoogleGenerativeAI
 
+from src.utils import load_config
+
+conf = load_config()
+
+
 def create_critic_agent(config, llm=None):
     """
     Create and configure the Critic Agent.
@@ -16,7 +21,7 @@ def create_critic_agent(config, llm=None):
     """
     if llm is None:
         llm = ChatGoogleGenerativeAI(
-            model="gemini/gemini-1.5-pro",
+            model=conf.gemini_model_pro,
             temperature=0.3,
             convert_system_message_to_human=True
         )

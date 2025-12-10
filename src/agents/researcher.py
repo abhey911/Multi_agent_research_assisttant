@@ -3,6 +3,9 @@
 from crewai import Agent
 from langchain_google_genai import ChatGoogleGenerativeAI
 from ..tools import create_search_tool, create_scraping_tool
+from src.utils import load_config
+
+conf = load_config()
 
 def create_researcher_agent(config, llm=None):
     """
@@ -17,7 +20,7 @@ def create_researcher_agent(config, llm=None):
     """
     if llm is None:
         llm = ChatGoogleGenerativeAI(
-            model="gemini/gemini-1.5-flash",
+            model=conf.gemini_model_pro,
             temperature=0.7,
             convert_system_message_to_human=True
         )

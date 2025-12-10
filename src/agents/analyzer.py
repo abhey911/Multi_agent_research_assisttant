@@ -4,6 +4,11 @@ from crewai import Agent
 from langchain_google_genai import ChatGoogleGenerativeAI
 from ..tools import create_processing_tool
 
+from src.utils import load_config
+
+conf = load_config()
+
+
 def create_analyzer_agent(config, llm=None):
     """
     Create and configure the Analyzer Agent.
@@ -17,7 +22,7 @@ def create_analyzer_agent(config, llm=None):
     """
     if llm is None:
         llm = ChatGoogleGenerativeAI(
-            model="gemini/gemini-1.5-flash",
+            model=conf.gemini_model_flash,
             temperature=0.5,
             convert_system_message_to_human=True
         )

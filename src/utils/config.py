@@ -15,8 +15,8 @@ class Config:
         self.google_api_key = os.getenv("GOOGLE_API_KEY")
         self.huggingface_api_key = os.getenv("HUGGINGFACE_API_KEY")
         self.serpapi_api_key = os.getenv("SERPAPI_API_KEY")
-        self.gemini_model_flash = os.getenv("GEMINI_MODEL_FLASH", "gemini-1.5-flash")
-        self.gemini_model_pro = os.getenv("GEMINI_MODEL_PRO", "gemini-1.5-pro")
+        self.gemini_model_flash = os.getenv("GEMINI_MODEL_FLASH", "gemini-2.5-flash")
+        self.gemini_model_pro = os.getenv("GEMINI_MODEL_PRO", "gemini-2.5-pro")
         self.hf_model = os.getenv("HF_MODEL", "huggingface/meta-llama/Llama-2-70b-chat-hf")
         self.use_huggingface = os.getenv("USE_HUGGINGFACE", "false").lower() == "true"
         self.max_search_results = int(os.getenv("MAX_SEARCH_RESULTS", 10))

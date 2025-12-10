@@ -122,13 +122,13 @@ def run_research(topic, research_depth):
         else:
             # Use Google Gemini (default)
             llm_flash = ChatGoogleGenerativeAI(
-                model="gemini/gemini-1.5-flash",
+                model=config.gemini_model_flash,
                 temperature=0.7,
                 convert_system_message_to_human=True
             )
             
             llm_pro = ChatGoogleGenerativeAI(
-                model="gemini/gemini-1.5-pro",
+                model=config.gemini_model_pro,
                 temperature=0.7,
                 convert_system_message_to_human=True
             )
