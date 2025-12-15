@@ -10,7 +10,7 @@ agents:
       Your research is always comprehensive, well-organized, and properly cited.
     verbose: true
     allow_delegation: false
-    max_iterations: 10
+    max_iterations: 3
     
   analyzer:
     role: "Data Analyst"
@@ -23,7 +23,7 @@ agents:
       Your analysis is always thorough, objective, and insightful.
     verbose: true
     allow_delegation: false
-    max_iterations: 5
+    max_iterations: 2
     
   writer:
     role: "Technical Writer"
@@ -36,7 +36,7 @@ agents:
       well-formatted, properly cited, and easy to understand.
     verbose: true
     allow_delegation: false
-    max_iterations: 3
+    max_iterations: 2
     
   critic:
     role: "Quality Assurance Specialist"
@@ -49,7 +49,7 @@ agents:
       Your feedback is always constructive and helps improve the final output.
     verbose: true
     allow_delegation: false
-    max_iterations: 2
+    max_iterations: 1
 
 tasks:
   research:

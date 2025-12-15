@@ -1,9 +1,9 @@
 """Researcher Agent - Gathers information from various sources."""
 
 from crewai import Agent
-from langchain_google_genai import ChatGoogleGenerativeAI
 from ..tools import create_search_tool, create_scraping_tool
 from src.utils import load_config
+from src.utils.llm_factory import create_llm
 
 conf = load_config()
 
@@ -19,11 +19,7 @@ def create_researcher_agent(config, llm=None):
         Agent: Configured researcher agent
     """
     if llm is None:
-        llm = ChatGoogleGenerativeAI(
-            model=conf.gemini_model_pro,
-            temperature=0.7,
-            convert_system_message_to_human=True
-        )
+        llm = create_llm(conf, temperature=0.5)
     
     # Get agent configuration
     agent_config = config.get('researcher', {})
@@ -41,7 +37,7 @@ def create_researcher_agent(config, llm=None):
         llm=llm,
         verbose=agent_config.get('verbose', True),
         allow_delegation=agent_config.get('allow_delegation', False),
-        max_iter=agent_config.get('max_iterations', 10),
+        max_iter=agent_config.get('max_iterations', 3),
         memory=True
     )
     

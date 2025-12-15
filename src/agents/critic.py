@@ -1,9 +1,8 @@
 """Critic Agent - Reviews and provides quality assurance."""
 
 from crewai import Agent
-from langchain_google_genai import ChatGoogleGenerativeAI
-
 from src.utils import load_config
+from src.utils.llm_factory import create_llm
 
 conf = load_config()
 
@@ -20,11 +19,7 @@ def create_critic_agent(config, llm=None):
         Agent: Configured critic agent
     """
     if llm is None:
-        llm = ChatGoogleGenerativeAI(
-            model=conf.gemini_model_pro,
-            temperature=0.3,
-            convert_system_message_to_human=True
-        )
+        llm = create_llm(conf, temperature=0.2)
     
     # Get agent configuration
     agent_config = config.get('critic', {})
@@ -38,7 +33,7 @@ def create_critic_agent(config, llm=None):
         llm=llm,
         verbose=agent_config.get('verbose', True),
         allow_delegation=agent_config.get('allow_delegation', False),
-        max_iter=agent_config.get('max_iterations', 2),
+        max_iter=agent_config.get('max_iterations', 1),
         memory=True
     )
     

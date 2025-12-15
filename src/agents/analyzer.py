@@ -1,10 +1,9 @@
 """Analyzer Agent - Processes and evaluates research data."""
 
 from crewai import Agent
-from langchain_google_genai import ChatGoogleGenerativeAI
 from ..tools import create_processing_tool
-
 from src.utils import load_config
+from src.utils.llm_factory import create_llm
 
 conf = load_config()
 
@@ -21,11 +20,7 @@ def create_analyzer_agent(config, llm=None):
         Agent: Configured analyzer agent
     """
     if llm is None:
-        llm = ChatGoogleGenerativeAI(
-            model=conf.gemini_model_flash,
-            temperature=0.5,
-            convert_system_message_to_human=True
-        )
+        llm = create_llm(conf, temperature=0.3)
     
     # Get agent configuration
     agent_config = config.get('analyzer', {})
@@ -42,7 +37,7 @@ def create_analyzer_agent(config, llm=None):
         llm=llm,
         verbose=agent_config.get('verbose', True),
         allow_delegation=agent_config.get('allow_delegation', False),
-        max_iter=agent_config.get('max_iterations', 5),
+        max_iter=agent_config.get('max_iterations', 2),
         memory=True
     )
     

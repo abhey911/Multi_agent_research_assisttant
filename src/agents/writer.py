@@ -1,8 +1,8 @@
 """Writer Agent - Creates comprehensive research reports."""
 
 from crewai import Agent
-from langchain_google_genai import ChatGoogleGenerativeAI
 from src.utils import load_config
+from src.utils.llm_factory import create_llm
 
 conf = load_config()
 
@@ -19,11 +19,7 @@ def create_writer_agent(config, llm=None):
         Agent: Configured writer agent
     """
     if llm is None:
-        llm = ChatGoogleGenerativeAI(
-            model=conf.gemini_model_flash,
-            temperature=0.7,
-            convert_system_message_to_human=True
-        )
+        llm = create_llm(conf, temperature=0.5)
     
     # Get agent configuration
     agent_config = config.get('writer', {})
@@ -37,7 +33,7 @@ def create_writer_agent(config, llm=None):
         llm=llm,
         verbose=agent_config.get('verbose', True),
         allow_delegation=agent_config.get('allow_delegation', False),
-        max_iter=agent_config.get('max_iterations', 3),
+        max_iter=agent_config.get('max_iterations', 2),
         memory=True
     )
     

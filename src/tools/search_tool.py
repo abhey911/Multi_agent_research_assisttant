@@ -3,6 +3,7 @@
 from crewai.tools import tool
 from duckduckgo_search import DDGS
 import os
+import time
 
 @tool("Web Search Tool")
 def search_tool(query: str) -> str:
@@ -16,7 +17,11 @@ def search_tool(query: str) -> str:
         str: Search results with titles, URLs, and snippets
     """
     try:
-        max_results = int(os.getenv("MAX_SEARCH_RESULTS", 10))
+        max_results = int(os.getenv("MAX_SEARCH_RESULTS", 3))
+        request_delay = float(os.getenv("REQUEST_DELAY", 2.0))
+        
+        # Add delay to prevent rate limiting
+        time.sleep(request_delay)
         
         # Use DuckDuckGo for web search
         with DDGS() as ddgs:

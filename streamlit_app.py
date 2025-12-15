@@ -23,6 +23,7 @@ from src.agents import (
 )
 from src.tasks import create_research_tasks
 from src.utils import load_config, get_agent_config, get_task_config, save_report
+from src.utils.llm_factory import create_llm, get_available_providers
 
 # Page configuration
 st.set_page_config(
@@ -105,41 +106,17 @@ def run_research(topic, research_depth):
         # Create status placeholder
         status_placeholder = st.empty()
         
-        # Create LLM instances based on configuration
-        status_placeholder.info("🔧 Initializing AI models...")
+        # Create LLM instance using factory
+        status_placeholder.info("🔧 Initializing AI model...")
+        llm = create_llm(config, temperature=0.5)
         
-        use_hf = config.use_huggingface
-        
-        if use_hf:
-            # Use Hugging Face
-            from langchain_community.llms import HuggingFaceHub
-            llm_flash = HuggingFaceHub(
-                repo_id=config.hf_model,
-                huggingfacehub_api_token=config.huggingface_api_key,
-                model_kwargs={"temperature": 0.7, "max_length": 512}
-            )
-            llm_pro = llm_flash  # Use same model for both
-        else:
-            # Use Google Gemini (default)
-            llm_flash = ChatGoogleGenerativeAI(
-                model=config.gemini_model_flash,
-                temperature=0.7,
-                convert_system_message_to_human=True
-            )
-            
-            llm_pro = ChatGoogleGenerativeAI(
-                model=config.gemini_model_pro,
-                temperature=0.7,
-                convert_system_message_to_human=True
-            )
-        
-        # Create agents with LLM instances
+        # Create agents with single LLM instance
         status_placeholder.info("🔧 Creating specialized agents...")
         
-        researcher = create_researcher_agent(agent_config, llm_flash)
-        analyzer = create_analyzer_agent(agent_config, llm_flash)
-        writer = create_writer_agent(agent_config, llm_pro)
-        critic = create_critic_agent(agent_config, llm_pro)
+        researcher = create_researcher_agent(agent_config, llm)
+        analyzer = create_analyzer_agent(agent_config, llm)
+        writer = create_writer_agent(agent_config, llm)
+        critic = create_critic_agent(agent_config, llm)
         
         agents = {
             'researcher': researcher,
@@ -195,9 +172,13 @@ def main():
         config_ok, config_msg = check_configuration()
         if config_ok:
             st.success("✅ " + config_msg)
+            config = load_config()
+            providers = get_available_providers(config)
+            if providers:
+                st.info("📡 Available Providers:\n" + "\n".join([f"- {p}" for p in providers]))
         else:
             st.error("❌ " + config_msg)
-            st.info("Please set up your .env file with required API keys.")
+            st.info("Please set up your .env file with at least one API key.")
             st.stop()
         
         st.markdown("---")
